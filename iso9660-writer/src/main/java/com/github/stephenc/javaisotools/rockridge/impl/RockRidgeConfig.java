@@ -26,6 +26,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RockRidgeConfig {
+    public boolean hideMovedDirectoriesStore = true;
+    public boolean forcePortableFilenameCharacterSet = true;
+    // Filename lengths are not restricted by Rock Ridge,
+    // these are just safe defaults
+    public int maxDirectoryLength = 255;
+    public int maxFilenameLength = 255;
+
+    public boolean isHideMovedDirectoriesStore() {
+        return hideMovedDirectoriesStore;
+    }
 
     private Map<String, Integer> patternToModeMap = new HashMap<String, Integer>();
     
@@ -52,7 +62,7 @@ public class RockRidgeConfig {
         if (length < 0) {
             throw new ConfigException(this, "Invalid maximum directory length: " + length);
         }
-        RockRidgeNamingConventions.MAX_DIRECTORY_LENGTH = length;
+        this.maxDirectoryLength = length;
     }
 
     /**
@@ -66,7 +76,7 @@ public class RockRidgeConfig {
         if (length < 0) {
             throw new ConfigException(this, "Invalid maximum directory length: " + length);
         }
-        RockRidgeNamingConventions.MAX_FILENAME_LENGTH = length;
+        this.maxFilenameLength = length;
     }
 
     /**
@@ -75,7 +85,7 @@ public class RockRidgeConfig {
      * @param flag Whether to replace all characters outside the Portable Filename Character Set
      */
     public void forcePortableFilenameCharacterSet(boolean flag) {
-        RockRidgeNamingConventions.FORCE_PORTABLE_FILENAME_CHARACTER_SET = flag;
+        this.forcePortableFilenameCharacterSet = flag;
     }
 
     /**
@@ -84,7 +94,7 @@ public class RockRidgeConfig {
      * @param flag Whether to prefix rr_moved with a dot
      */
     public void hideMovedDirectoriesStore(boolean flag) {
-        RockRidgeNamingConventions.HIDE_MOVED_DIRECTORIES_STORE = flag;
+        this.hideMovedDirectoriesStore = flag;
     }
 
     /**

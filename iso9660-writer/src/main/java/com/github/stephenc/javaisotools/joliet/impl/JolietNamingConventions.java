@@ -28,14 +28,13 @@ import com.github.stephenc.javaisotools.sabre.HandlerException;
 
 public class JolietNamingConventions extends NamingConventions {
     private final int jolietMaxChars;
+    private final boolean forceDotDelimiter;
 
     /**
      * Whether to fail if a file name will be truncated
      */
 	private boolean failOnTruncation;
     
-	public static boolean FORCE_DOT_DELIMITER = true;
-
 	/**
 	 * @param maxChars
 	 *            Maximum number of characters permitted in the filename: (64
@@ -43,10 +42,11 @@ public class JolietNamingConventions extends NamingConventions {
 	 * 
 	 * @see <a href="http://msdn.microsoft.com/en-us/library/ff469400.aspx">link</a>
 	 */
-    public JolietNamingConventions(int maxChars, boolean failOnTruncation) {
+    public JolietNamingConventions(int maxChars, boolean failOnTruncation, boolean forceDotDelimiter) {
         super("Joliet");
         jolietMaxChars = maxChars;
         this.failOnTruncation = failOnTruncation;
+        this.forceDotDelimiter = forceDotDelimiter;
     }
 
     public void apply(ISO9660Directory dir) throws HandlerException {
@@ -75,7 +75,7 @@ public class JolietNamingConventions extends NamingConventions {
 
         String filename = normalize(file.getFilename());
         String extension = normalize(file.getExtension());
-        file.enforceDotDelimiter(FORCE_DOT_DELIMITER);
+        file.enforceDotDelimiter(this.forceDotDelimiter);
 
         if (filename.length() == 0 && extension.length() == 0) {
             throw new HandlerException(getID() + ": Empty file name encountered.");

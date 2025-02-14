@@ -26,6 +26,9 @@ import com.github.stephenc.javaisotools.iso9660.StandardConfig;
 
 public class ISO9660Config extends StandardConfig {
 
+    public int interchangeLevel = 1;
+    public boolean forceISO9660Charset = true;
+    public boolean forceDotDelimiter = true;
     private boolean restrictDirDepthTo8, allowASCII, padEnd;
 
     public ISO9660Config() {
@@ -50,7 +53,7 @@ public class ISO9660Config extends StandardConfig {
             throw new ConfigException(this,
                     "Interchange Level 3 (multiple File Sections per file) is not (yet) supported by this implementation.");
         }
-        ISO9660NamingConventions.INTERCHANGE_LEVEL = level;
+        this.interchangeLevel = level;
     }
 
     /**
@@ -59,7 +62,7 @@ public class ISO9660Config extends StandardConfig {
      * @param force Whether files must include the dot character
      */
     public void forceDotDelimiter(boolean force) {
-        ISO9660NamingConventions.FORCE_DOT_DELIMITER = force;
+        this.forceDotDelimiter = force;
         if (!force) {
             System.out.println("Warning: Not forcing to include the dot in filenames breaks ISO 9660 conformance.");
         }
@@ -72,7 +75,7 @@ public class ISO9660Config extends StandardConfig {
      */
     public void allowASCII(boolean allow) {
         this.allowASCII = allow;
-        ISO9660NamingConventions.FORCE_ISO9660_CHARSET = !allow;
+        this.forceISO9660Charset = !allow;
         if (allow) {
             System.out.println("Warning: Allowing the full ASCII character set breaks ISO 9660 conformance.");
         }

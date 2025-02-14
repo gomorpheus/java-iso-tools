@@ -27,23 +27,27 @@ import com.github.stephenc.javaisotools.iso9660.NamingConventions;
 
 public class RockRidgeNamingConventions extends NamingConventions {
 
-    public static boolean HIDE_MOVED_DIRECTORIES_STORE = true;
-    public static boolean FORCE_PORTABLE_FILENAME_CHARACTER_SET = true;
+    public boolean hideMovedDirectoriesStore = true;
+    public boolean forcePortableFilenameCharacterSet = true;
     // Filename lengths are not restricted by Rock Ridge,
     // these are just safe defaults
-    public static int MAX_DIRECTORY_LENGTH = 255;
-    public static int MAX_FILENAME_LENGTH = 255;
+    public int maxDirectoryLength = 255;
+    public int maxFilenameLength = 255;
 
-    public RockRidgeNamingConventions() {
+    public RockRidgeNamingConventions(RockRidgeConfig rockRidgeConfig) {
         super("Rock Ridge");
+        this.hideMovedDirectoriesStore = rockRidgeConfig.hideMovedDirectoriesStore;
+        this.forcePortableFilenameCharacterSet = rockRidgeConfig.forcePortableFilenameCharacterSet;
+        this.maxDirectoryLength = rockRidgeConfig.maxDirectoryLength;
+        this.maxFilenameLength = rockRidgeConfig.maxFilenameLength;
     }
 
     public void apply(ISO9660Directory dir) {
         String filename = normalize(dir.getName());
 
-        if (filename.length() > MAX_DIRECTORY_LENGTH) {
+        if (filename.length() > maxDirectoryLength) {
             // Shorten filename
-            filename = filename.substring(0, MAX_DIRECTORY_LENGTH);
+            filename = filename.substring(0, maxDirectoryLength);
         }
 
         setFilename(dir, filename);
@@ -55,14 +59,14 @@ public class RockRidgeNamingConventions extends NamingConventions {
         int length = filename.length() + extension.length();
 
         if (extension.length() == 0) {
-            if (length > MAX_FILENAME_LENGTH) {
+            if (length > maxFilenameLength) {
                 // Shorten filename
-                filename = filename.substring(0, MAX_FILENAME_LENGTH);
+                filename = filename.substring(0, maxFilenameLength);
             }
         } else {
-            if (length + 1 > MAX_FILENAME_LENGTH) {
+            if (length + 1 > maxFilenameLength) {
                 // Shorten filename
-                filename = filename.substring(0, MAX_FILENAME_LENGTH - extension.length() - 1);
+                filename = filename.substring(0, maxFilenameLength - extension.length() - 1);
             }
         }
 
@@ -80,7 +84,7 @@ public class RockRidgeNamingConventions extends NamingConventions {
     }
 
     private String normalize(String name) {
-        if (FORCE_PORTABLE_FILENAME_CHARACTER_SET) {
+        if (forcePortableFilenameCharacterSet) {
             return name.replaceAll("[^-A-Za-z0-9._]", "_");
         }
         return name;

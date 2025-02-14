@@ -28,15 +28,18 @@ import com.github.stephenc.javaisotools.sabre.HandlerException;
 
 public class ISO9660NamingConventions extends NamingConventions {
 
-    public static int INTERCHANGE_LEVEL = 1;
-    public static boolean FORCE_ISO9660_CHARSET = true;
-    public static boolean FORCE_DOT_DELIMITER = true;
+    public int interchangeLevel = 1;
+    public boolean forceISO9660Charset = true;
+    public boolean forceDotDelimiter = true;
     private boolean enforce8plus3;
-    private int MAX_DIRECTORY_LENGTH, MAX_FILENAME_LENGTH, MAX_EXTENSION_LENGTH;
+    private int maxDirectoryLength, maxFilenameLength, maxExtensionLength;
 
-    public ISO9660NamingConventions() {
+    public ISO9660NamingConventions(ISO9660Config config) {
         super("ISO 9660");
-    }
+        this.interchangeLevel = config.interchangeLevel;
+        this.forceISO9660Charset = config.forceISO9660Charset;
+        this.forceDotDelimiter = config.forceDotDelimiter;
+     }
 
     public void apply(ISO9660Directory dir) throws HandlerException {
         // ISO 9660 directory restrictions:
@@ -47,8 +50,8 @@ public class ISO9660NamingConventions extends NamingConventions {
         init();
 
         String filename = normalize(dir.getName());
-        if (filename.length() > MAX_DIRECTORY_LENGTH) {
-            filename = filename.substring(0, MAX_DIRECTORY_LENGTH);
+        if (filename.length() > maxDirectoryLength) {
+            filename = filename.substring(0, maxDirectoryLength);
         }
 
         if (filename.length() == 0) {
@@ -71,22 +74,22 @@ public class ISO9660NamingConventions extends NamingConventions {
 
         String filename = normalize(file.getFilename());
         String extension = normalize(file.getExtension());
-        file.enforceDotDelimiter(FORCE_DOT_DELIMITER);
+        file.enforceDotDelimiter(forceDotDelimiter);
 
         if (filename.length() == 0 && extension.length() == 0) {
             throw new HandlerException(getID() + ": Empty file name encountered.");
         }
 
         if (enforces8plus3()) {
-            if (filename.length() > MAX_FILENAME_LENGTH) {
-                filename = filename.substring(0, MAX_FILENAME_LENGTH);
+            if (filename.length() > maxFilenameLength) {
+                filename = filename.substring(0, maxFilenameLength);
             }
-            if (extension.length() > MAX_EXTENSION_LENGTH) {
+            if (extension.length() > maxExtensionLength) {
                 String mapping = getExtensionMapping(extension);
-                if (mapping != null && mapping.length() <= MAX_EXTENSION_LENGTH) {
+                if (mapping != null && mapping.length() <= maxExtensionLength) {
                     extension = normalize(mapping);
                 } else {
-                    extension = extension.substring(0, MAX_EXTENSION_LENGTH);
+                    extension = extension.substring(0, maxExtensionLength);
                 }
             }
         } else {
@@ -98,7 +101,7 @@ public class ISO9660NamingConventions extends NamingConventions {
                 } else {
                     // Shorten extension
                     String mapping = getExtensionMapping(extension);
-                    if (mapping != null && mapping.length() <= MAX_EXTENSION_LENGTH) {
+                    if (mapping != null && mapping.length() <= maxExtensionLength) {
                         extension = normalize(mapping);
                     } else {
                         extension = extension.substring(0, 30 - filename.length());
@@ -111,19 +114,19 @@ public class ISO9660NamingConventions extends NamingConventions {
     }
 
     public void init() {
-        if (INTERCHANGE_LEVEL == 1) {
+        if (interchangeLevel == 1) {
             enforce8plus3(true);
         }
 
         if (enforces8plus3()) {
             // Interchange Level 1 (or explicitly requested): Directories 8, files 8+3 characters
-            MAX_DIRECTORY_LENGTH = 8;
-            MAX_FILENAME_LENGTH = 8;
-            MAX_EXTENSION_LENGTH = 3;
+            maxDirectoryLength = 8;
+            maxFilenameLength = 8;
+            maxExtensionLength = 3;
         } else {
-            MAX_DIRECTORY_LENGTH = 31;
-            MAX_FILENAME_LENGTH = 0;
-            MAX_EXTENSION_LENGTH = 0;
+            maxDirectoryLength = 31;
+            maxFilenameLength = 0;
+            maxExtensionLength = 0;
         }
     }
 
@@ -136,7 +139,7 @@ public class ISO9660NamingConventions extends NamingConventions {
     }
 
     private String normalize(String name) {
-        if (FORCE_ISO9660_CHARSET) {
+        if (forceISO9660Charset) {
             name = name.toUpperCase();
             return name.replaceAll("[^A-Z0-9_]", "_");
         } // else

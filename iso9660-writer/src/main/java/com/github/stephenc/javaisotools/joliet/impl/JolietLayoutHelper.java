@@ -31,8 +31,8 @@ import com.github.stephenc.javaisotools.iso9660.LayoutHelper;
 
 public class JolietLayoutHelper extends LayoutHelper {
 
-    public JolietLayoutHelper(StreamHandler streamHandler, ISO9660RootDirectory root, int maxCharsInFilename, boolean failOnTruncation) {
-        super(streamHandler, root, new JolietNamingConventions(maxCharsInFilename, failOnTruncation));
+    public JolietLayoutHelper(StreamHandler streamHandler, ISO9660RootDirectory root, int maxCharsInFilename, boolean failOnTruncation, boolean forceDotDelimiter) {
+        super(streamHandler, root, new JolietNamingConventions(maxCharsInFilename, failOnTruncation, forceDotDelimiter));
     }
 
     public FilenameDataReference getFilenameDataReference(ISO9660Directory dir) throws HandlerException {

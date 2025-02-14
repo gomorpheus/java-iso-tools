@@ -36,8 +36,8 @@ public class RockRidgeLayoutHelper extends LayoutHelper {
     private HashMap directoryMapper, fileMapper;
 
     public RockRidgeLayoutHelper(StreamHandler streamHandler, ISO9660RootDirectory isoRoot,
-                                 ISO9660RootDirectory rripRoot) {
-        super(streamHandler, isoRoot, new RockRidgeNamingConventions());
+                                 ISO9660RootDirectory rripRoot, RockRidgeConfig rockRidgeConfig) {
+        super(streamHandler, isoRoot, new RockRidgeNamingConventions(rockRidgeConfig));
         this.rripRoot = rripRoot;
         setup(isoRoot);
     }

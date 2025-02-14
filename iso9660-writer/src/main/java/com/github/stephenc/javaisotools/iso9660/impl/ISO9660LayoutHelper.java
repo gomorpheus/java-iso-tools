@@ -31,8 +31,8 @@ import com.github.stephenc.javaisotools.sabre.StreamHandler;
 
 public class ISO9660LayoutHelper extends LayoutHelper {
 
-    public ISO9660LayoutHelper(StreamHandler streamHandler, ISO9660RootDirectory root) {
-        super(streamHandler, root, new ISO9660NamingConventions());
+    public ISO9660LayoutHelper(StreamHandler streamHandler, ISO9660RootDirectory root, ISO9660Config config) {
+        super(streamHandler, root, new ISO9660NamingConventions(config));
     }
 
     public FilenameDataReference getFilenameDataReference(ISO9660Directory dir) throws HandlerException {

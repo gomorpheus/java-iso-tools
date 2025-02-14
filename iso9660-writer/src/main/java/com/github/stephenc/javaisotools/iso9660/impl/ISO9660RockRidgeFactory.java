@@ -26,13 +26,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import com.github.stephenc.javaisotools.iso9660.sabre.impl.BothWordDataReference;
-import com.github.stephenc.javaisotools.rockridge.impl.POSIXFileMode;
-import com.github.stephenc.javaisotools.rockridge.impl.RRIPFactory;
+import com.github.stephenc.javaisotools.rockridge.impl.*;
 import com.github.stephenc.javaisotools.sabre.DataReference;
 import com.github.stephenc.javaisotools.sabre.Fixup;
 import com.github.stephenc.javaisotools.sabre.HandlerException;
-import com.github.stephenc.javaisotools.rockridge.impl.RockRidgeLayoutHelper;
-import com.github.stephenc.javaisotools.rockridge.impl.RockRidgeNamingConventions;
 import com.github.stephenc.javaisotools.sabre.StreamHandler;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -41,24 +38,24 @@ import java.util.regex.Pattern;
 public class ISO9660RockRidgeFactory extends ISO9660Factory {
 
     private RRIPFactory rripFactory;
+    private final RockRidgeConfig rrConfig;
     private LinkedList unfinishedNMEntries;
     private RockRidgeLayoutHelper helper;
     private ISO9660RootDirectory rripRoot;
     private HashMap originalParentMapper, parentLocationFixups, parentLocations, childLocationFixups, childLocations;
-    private final Map<String, Integer> fileModesMap;
 
     public ISO9660RockRidgeFactory(StreamHandler streamHandler, StandardConfig config, LayoutHelper helper,
-                                   ISO9660RootDirectory root, ISO9660RootDirectory isoRoot, HashMap volumeFixups, Map<String, Integer> fileModesMap) {
+                                   ISO9660RootDirectory root, ISO9660RootDirectory isoRoot, HashMap volumeFixups, RockRidgeConfig rrConfig) {
         super(streamHandler, config, helper, isoRoot, volumeFixups);
         this.rripFactory = new RRIPFactory(streamHandler);
+        this.rrConfig = rrConfig;
         this.unfinishedNMEntries = new LinkedList();
 
         // Use a copy of the original root for Rock Ridge
         rripRoot = (ISO9660RootDirectory) root.clone();
-        this.helper = new RockRidgeLayoutHelper(streamHandler, isoRoot, rripRoot);
+        this.helper = new RockRidgeLayoutHelper(streamHandler, isoRoot, rripRoot, rrConfig);
 
         originalParentMapper = new HashMap();
-        this.fileModesMap = fileModesMap;
     }
 
     public void applyNamingConventions() throws HandlerException {
@@ -82,7 +79,7 @@ public class ISO9660RockRidgeFactory extends ISO9660Factory {
             childLocations = new HashMap();
             rripRoot.setMovedDirectoryStore();
 
-            if (RockRidgeNamingConventions.HIDE_MOVED_DIRECTORIES_STORE
+            if (rrConfig.isHideMovedDirectoriesStore()
                     && !rripRoot.getMovedDirectoriesStore().getName().startsWith(".")) {
                 // Hide Moved Directories Store for Rock Ridge
                 rripRoot.getMovedDirectoriesStore().setName("." +
@@ -417,13 +414,13 @@ public class ISO9660RockRidgeFactory extends ISO9660Factory {
         final POSIXFileMode ret = new POSIXFileMode();
         
         // Try to see if we can match the object name against one of the matchers
-        for(String pattern:fileModesMap.keySet()) {
+        for(String pattern: rrConfig.getPatternToModeMap().keySet()) {
             Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
             Matcher m = p.matcher(ho.getName());
             if (m.matches()) {
                 POSIXFileMode mode = new POSIXFileMode();
                 mode.setDefault(ho instanceof ISO9660Directory);
-                mode.setPermission(fileModesMap.get(pattern));
+                mode.setPermission(rrConfig.getPatternToModeMap().get(pattern));
                 return mode;
             }
         }

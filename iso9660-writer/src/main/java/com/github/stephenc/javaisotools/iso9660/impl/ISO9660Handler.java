@@ -54,10 +54,10 @@ public class ISO9660Handler extends StandardHandler {
 
         // Use a copy of the original root for ISO 9660
         ISO9660RootDirectory isoRoot = (ISO9660RootDirectory) root.clone();
-        this.helper = new ISO9660LayoutHelper(this, isoRoot);
+        this.helper = new ISO9660LayoutHelper(this, isoRoot, config);
 
         if (rrConfig != null) {
-            this.factory = new ISO9660RockRidgeFactory(this, config, helper, root, isoRoot, volumeFixups, rrConfig.getPatternToModeMap());
+            this.factory = new ISO9660RockRidgeFactory(this, config, helper, root, isoRoot, volumeFixups, rrConfig);
         } else {
             this.factory = new ISO9660Factory(this, config, helper, isoRoot, volumeFixups);
         }

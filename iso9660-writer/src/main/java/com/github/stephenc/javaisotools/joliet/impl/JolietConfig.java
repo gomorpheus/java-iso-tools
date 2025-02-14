@@ -35,6 +35,7 @@ public class JolietConfig extends StandardConfig {
 	private int maxCharsInFilename = 64;
 	
 	private boolean failOnTruncation;
+    private boolean forceDotDelimiter = true;
 
     public JolietConfig() {
         super();
@@ -47,7 +48,7 @@ public class JolietConfig extends StandardConfig {
      * @param force Whether files must include the dot character
      */
     public void forceDotDelimiter(boolean force) {
-        JolietNamingConventions.FORCE_DOT_DELIMITER = force;
+        this.forceDotDelimiter = force;
         if (!force) {
             System.out.println("Warning: Not forcing to include the dot in filenames breaks Joliet conformance.");
         }
@@ -143,4 +144,8 @@ public class JolietConfig extends StandardConfig {
 	public void setFailOnTruncation(boolean failOnTruncation) {
 		this.failOnTruncation = failOnTruncation;
 	}
+
+    public boolean isForceDotDelimiter() {
+        return forceDotDelimiter;
+    }
 }
