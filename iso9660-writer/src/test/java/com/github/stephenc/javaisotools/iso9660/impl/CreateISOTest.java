@@ -63,16 +63,7 @@ public class CreateISOTest {
 
     @BeforeClass
     public static void loadConfiguration() throws Exception {
-        Properties props = new Properties();
-        InputStream is = null;
-        try {
-            is = CreateISOTest.class.getResourceAsStream("/test.properties");
-            props.load(is);
-        } finally {
-            IOUtil.close(is);
-        }
-        workDir = new File(props.getProperty("work-directory"));
-        assertThat("We can create our work directory", workDir.mkdirs() || workDir.isDirectory(), is(true));
+        workDir = new File(System.getProperty("testWorkDir"));
     }
 
     @Test

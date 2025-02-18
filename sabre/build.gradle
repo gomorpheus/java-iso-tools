@@ -1,0 +1,10 @@
+plugins {
+    id 'buildlogic.java-conventions'
+}
+
+dependencies {
+    api libs.commons.lang
+    api libs.ant
+}
+
+description = 'Simple API for Binary Representations'

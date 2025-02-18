@@ -36,7 +36,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
 
 /**
  * Tests the Iso9660 implementation.
@@ -46,20 +45,11 @@ import java.util.Properties;
  */
 public class Iso9660FileSystemTest {
 
-    private static Properties testProperties;
     private static String filePath;
 
     @BeforeClass
-    public static void loadConfiguration() throws Exception {
-        testProperties = new Properties();
-        InputStream is = null;
-        try {
-            is = Iso9660FileSystemTest.class.getResourceAsStream("/test.properties");
-            testProperties.load(is);
-            filePath = testProperties.getProperty("source-image");
-        } finally {
-            IOUtil.close(is);
-        }
+    public static void loadConfiguration() {
+        filePath = System.getProperty("imagesDir") + "/iso/test1.iso";
     }
 
     @Test
@@ -96,7 +86,7 @@ public class Iso9660FileSystemTest {
     }
 
     private void runCheck(Iso9660FileSystem image) throws Exception {
-        File source = new File(testProperties.getProperty("source-root"));
+        File source = new File(System.getProperty("imagesDir") + "/raw/test1");
         for (Iso9660FileEntry entry : image) {
             File sourceFile = new File(source, entry.getPath());
             assertThat(sourceFile.isDirectory(), is(entry.isDirectory()));

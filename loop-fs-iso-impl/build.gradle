@@ -1,0 +1,30 @@
+plugins {
+    id 'buildlogic.java-conventions'
+}
+
+dependencies {
+	api project(':loop-fs-spi')
+
+    api libs.commons.logging
+    api libs.commons.io
+
+    api(libs.hadoop.hdfs) {
+		artifact {
+			classifier = "tests"
+		}
+	}
+    api(libs.hadoop.common) {
+		artifact {
+			classifier = "tests"
+		}
+	}
+
+    testImplementation libs.junit
+    testImplementation libs.plexus.utils
+}
+
+description = 'Loop-back File System Iso9660 implementation'
+
+test {
+	systemProperty "imagesDir", file("src/test/images").absolutePath
+}

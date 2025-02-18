@@ -1,0 +1,10 @@
+plugins {
+    id 'buildlogic.java-conventions'
+}
+
+dependencies {
+    api project(':loop-fs-api')
+    api libs.hadoop.client
+}
+
+description = 'Loop-back File System SPI'

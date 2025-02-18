@@ -1,0 +1,24 @@
+plugins {
+    id 'buildlogic.java-conventions'
+}
+
+dependencies {
+    api project(':sabre')
+    testImplementation libs.junit
+    testImplementation libs.plexus.utils
+    testImplementation project(':iso9660-vfs-impl')
+}
+
+description = 'Iso9660 Writer'
+
+test {
+	def testWorkDir = layout.buildDirectory.dir('test-work').get().asFile
+
+	workingDir = testWorkDir
+
+	doFirst {
+		testWorkDir.mkdirs()
+	}
+
+	systemProperty 'testWorkDir', testWorkDir
+}
