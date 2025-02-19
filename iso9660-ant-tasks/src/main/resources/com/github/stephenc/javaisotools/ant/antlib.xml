@@ -18,5 +18,5 @@
   -->
 
 <antlib>
-    <taskdef name="iso" classname="com.github.stephenc.javaisotools.ant.IsoTask"/>
+    <taskdef name="iso" classname="com.morpheusdata.javaisotools.ant.IsoTask"/>
 </antlib>

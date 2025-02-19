@@ -1,11 +1,11 @@
-package com.github.stephenc.javaisotools.examples.archive;
+package com.morpheusdata.javaisotools.examples.archive;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import com.github.stephenc.javaisotools.loopfs.iso9660.Iso9660FileEntry;
-import com.github.stephenc.javaisotools.loopfs.iso9660.Iso9660FileSystem;
+import com.morpheusdata.javaisotools.loopfs.iso9660.Iso9660FileEntry;
+import com.morpheusdata.javaisotools.loopfs.iso9660.Iso9660FileSystem;
 
 /***
  * This is a adaptation of https://github.com/danveloper/provisioning-gradle-plugin/blob/master/src/main/groovy/

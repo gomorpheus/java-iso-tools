@@ -1,4 +1,4 @@
-package com.github.stephenc.javaisotools.examples.archive;
+package com.morpheusdata.javaisotools.examples.archive;
 
 import java.io.File;
 

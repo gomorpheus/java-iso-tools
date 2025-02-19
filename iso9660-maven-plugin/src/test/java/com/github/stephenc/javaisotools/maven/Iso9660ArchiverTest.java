@@ -1,4 +1,4 @@
-package com.github.stephenc.javaisotools.maven;
+package com.morpheusdata.javaisotools.maven;
 
 import static org.junit.Assert.*;
 

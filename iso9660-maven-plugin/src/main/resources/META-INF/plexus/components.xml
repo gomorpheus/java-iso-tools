@@ -26,7 +26,7 @@
             <configuration>
                 <phases>
                     <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
-                    <package>com.github.stephenc.java-iso-tools:iso9660-maven-plugin:iso</package>
+                    <package>com.morpheusdata.java-iso-tools:iso9660-maven-plugin:iso</package>
                     <install>org.apache.maven.plugins:maven-install-plugin:install</install>
                     <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
                 </phases>
@@ -35,7 +35,7 @@
         <component>
             <role>org.codehaus.plexus.archiver.Archiver</role>
             <role-hint>iso</role-hint>
-            <implementation>com.github.stephenc.javaisotools.maven.Iso9660Archiver</implementation>
+            <implementation>com.morpheusdata.javaisotools.maven.Iso9660Archiver</implementation>
             <configuration>
                 <type>iso</type>
                 <extension>iso</extension>

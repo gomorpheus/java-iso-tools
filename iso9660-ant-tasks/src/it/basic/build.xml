@@ -17,7 +17,7 @@
   ~ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
   -->
 
-<project name="smoke-test" xmlns:iso="antlib:com.github.stephenc.javaisotools.ant">
+<project name="smoke-test" xmlns:iso="antlib:com.morpheusdata.javaisotools.ant">
 
   <property environment="env"/>
 
@@ -28,7 +28,7 @@
   </path>
 
   <xmlproperty file="../../../pom.xml" prefix="pom.xml"/>
-  <typedef uri="antlib:com.github.stephenc.javaisotools.ant">
+  <typedef uri="antlib:com.morpheusdata.javaisotools.ant">
     <classpath path="../../../target/${pom.xml.project.artifactId}-${pom.xml.project.parent.version}.jar"/>
   </typedef>
 

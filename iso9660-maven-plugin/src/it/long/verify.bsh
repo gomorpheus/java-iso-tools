@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 import org.codehaus.plexus.util.FileUtils;
-import com.github.stephenc.javaisotools.loopfs.iso9660.*;
+import com.morpheusdata.javaisotools.loopfs.iso9660.*;
 
 File buildDir = new File( basedir, "target" );
 File isoFile = new File( buildDir, "long-1.2-SNAPSHOT.iso");
