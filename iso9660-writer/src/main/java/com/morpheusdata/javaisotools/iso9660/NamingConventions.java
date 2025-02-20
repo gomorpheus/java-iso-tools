@@ -25,7 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.morpheusdata.javaisotools.sabre.HandlerException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class NamingConventions {
 
     public static boolean VERBOSE = false;
@@ -62,25 +64,25 @@ public abstract class NamingConventions {
 
     public void startRenaming(ISO9660Directory dir) {
         if (VERBOSE) {
-            System.out.print(id + ": Renamed directory " + dir.getISOPath());
+            log.info("{}: Renamed directory {}", id, dir.getISOPath());
         }
     }
 
     public void startRenaming(ISO9660File file) {
         if (VERBOSE) {
-            System.out.print(id + ": Renamed file " + file.getISOPath());
+            log.info("{}: Renamed file {}", id, file.getISOPath());
         }
     }
 
     public void endRenaming(ISO9660Directory dir) {
         if (VERBOSE) {
-            System.out.println(" to " + dir.getName());
+            log.info(" to {}", dir.getName());
         }
     }
 
     public void endRenaming(ISO9660File file) {
         if (VERBOSE) {
-            System.out.println(" to " + file.getFullName());
+            log.info(" to {}", file.getFullName());
         }
     }
 

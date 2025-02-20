@@ -25,7 +25,9 @@ import com.morpheusdata.javaisotools.iso9660.ISO9660Directory;
 import com.morpheusdata.javaisotools.iso9660.ISO9660File;
 import com.morpheusdata.javaisotools.iso9660.NamingConventions;
 import com.morpheusdata.javaisotools.sabre.HandlerException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class JolietNamingConventions extends NamingConventions {
     private final int jolietMaxChars;
     private final boolean forceDotDelimiter;
@@ -130,7 +132,7 @@ public class JolietNamingConventions extends NamingConventions {
     public void checkPathLength(String isoPath) {
         // "Remainder of ISO 9660 section 6.8.2.1": 240 Byte (120 characters)
         if (isoPath.length() > 120) {
-            System.out.println(getID() + ": Path length exceeds limit: " + isoPath);
+            log.warn("{}: Path length exceeds limit: {}", getID(), isoPath);
         }
     }
 }

@@ -22,7 +22,9 @@ package com.morpheusdata.javaisotools.joliet.impl;
 import com.morpheusdata.javaisotools.iso9660.ConfigException;
 import com.morpheusdata.javaisotools.sabre.impl.ByteArrayDataReference;
 import com.morpheusdata.javaisotools.iso9660.StandardConfig;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class JolietConfig extends StandardConfig {
 
     private static byte[][] UCS2_LEVEL_ESCAPE_SEQUENCES = {
@@ -49,7 +51,7 @@ public class JolietConfig extends StandardConfig {
     public void forceDotDelimiter(boolean force) {
         this.forceDotDelimiter = force;
         if (!force) {
-            System.out.println("Warning: Not forcing to include the dot in filenames breaks Joliet conformance.");
+            log.warn("Not forcing to include the dot in filenames breaks Joliet conformance.");
         }
     }
 

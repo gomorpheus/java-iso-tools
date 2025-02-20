@@ -38,9 +38,10 @@ import com.morpheusdata.javaisotools.sabre.impl.ChainingStreamHandler;
 import com.morpheusdata.javaisotools.iso9660.impl.LogicalSectorElement;
 import com.morpheusdata.javaisotools.sabre.Fixup;
 import com.morpheusdata.javaisotools.sabre.StreamHandler;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ElToritoHandler extends ChainingStreamHandler {
-
     private ElToritoConfig config;
     private Fixup bootCatalogLocation, bootImageLocation;
 
@@ -209,7 +210,8 @@ public class ElToritoHandler extends ChainingStreamHandler {
             patchedFile.renameTo(orgFile);
             config.setBootImage(new ISO9660File(orgFile));
 
-            System.out.println("Patched boot image at " + orgFile.getPath());
+
+            log.info("Patched boot image at {}", orgFile.getPath());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

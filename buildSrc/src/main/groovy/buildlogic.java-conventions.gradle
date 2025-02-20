@@ -18,6 +18,15 @@ group = 'com.morpheusdata.java-iso-tools'
 version = '2.1.1-SNAPSHOT'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
+dependencies {
+	implementation libs.slf4j.api
+	compileOnly libs.lombok
+	annotationProcessor libs.lombok
+
+	testCompileOnly libs.lombok
+	testAnnotationProcessor libs.lombok
+}
+
 publishing {
     publications {
         maven(MavenPublication) {

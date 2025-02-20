@@ -23,7 +23,10 @@ import java.lang.Character.UnicodeBlock;
 
 import com.morpheusdata.javaisotools.iso9660.ConfigException;
 import com.morpheusdata.javaisotools.iso9660.StandardConfig;
+import jdk.jpackage.internal.Log;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ISO9660Config extends StandardConfig {
 
     public int interchangeLevel = 1;
@@ -64,7 +67,7 @@ public class ISO9660Config extends StandardConfig {
     public void forceDotDelimiter(boolean force) {
         this.forceDotDelimiter = force;
         if (!force) {
-            System.out.println("Warning: Not forcing to include the dot in filenames breaks ISO 9660 conformance.");
+            log.warn("Not forcing to include the dot in filenames breaks ISO 9660 conformance.");
         }
     }
 
@@ -77,7 +80,7 @@ public class ISO9660Config extends StandardConfig {
         this.allowASCII = allow;
         this.forceISO9660Charset = !allow;
         if (allow) {
-            System.out.println("Warning: Allowing the full ASCII character set breaks ISO 9660 conformance.");
+            log.warn("Allowing the full ASCII character set breaks ISO 9660 conformance.");
         }
     }
 
@@ -107,7 +110,7 @@ public class ISO9660Config extends StandardConfig {
     public void restrictDirDepthTo8(boolean restrictDirDepthTo8) {
         this.restrictDirDepthTo8 = restrictDirDepthTo8;
         if (!restrictDirDepthTo8) {
-            System.out.println("Warning: Allowing more than 8 directory levels breaks ISO 9660 conformance.");
+            log.warn("Allowing more than 8 directory levels breaks ISO 9660 conformance.");
         }
     }
 

@@ -21,10 +21,13 @@
 package com.morpheusdata.javaisotools.rockridge.impl;
 
 import com.morpheusdata.javaisotools.iso9660.ConfigException;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class RockRidgeConfig {
     public boolean hideMovedDirectoriesStore = true;
     public boolean forcePortableFilenameCharacterSet = true;
@@ -103,7 +106,7 @@ public class RockRidgeConfig {
      * @param mode the POSIX file mode for matching filenames
      */
     public void addModeForPattern(String pattern, Integer mode) {
-        System.out.println(String.format("*** Recording pattern \"%s\" with mode %o", pattern, mode));
+        log.info("*** Recording pattern \"{}\" with mode {}", pattern, String.format("%o", mode));
         patternToModeMap.put(pattern, mode);
     }
 

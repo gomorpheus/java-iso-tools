@@ -26,7 +26,9 @@ import java.io.RandomAccessFile;
 
 import com.morpheusdata.javaisotools.sabre.Fixup;
 import com.morpheusdata.javaisotools.sabre.impl.FileFixup;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class SingleFileFixupList {
 
     private static int fixupLength = 16;
@@ -78,7 +80,7 @@ public class SingleFileFixupList {
                 available = this.indexFile.readLong();
                 result = new FileFixup(this.fixedFile, position, available);
             } else {
-                System.out.println("Autsch");
+                log.error("Ouch!");
                 // throw new IndexOutOfBoundsException();
             }
         } catch (IOException e) {

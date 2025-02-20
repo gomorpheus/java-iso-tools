@@ -33,7 +33,9 @@ import com.morpheusdata.javaisotools.sabre.Element;
 import com.morpheusdata.javaisotools.sabre.Fixup;
 import com.morpheusdata.javaisotools.sabre.HandlerException;
 import com.morpheusdata.javaisotools.sabre.StructureHandler;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class CopyingStreamHandler extends ChainingStreamHandler {
 
     private Element targetType = null;
@@ -90,7 +92,7 @@ public class CopyingStreamHandler extends ChainingStreamHandler {
                 buffer = new byte[bufferLength];
                 length = reference.getLength();
 
-                System.out.println("Copying " + length + " bytes to " + this.targetType);
+                log.trace("Copying {} bytes to {}", length, this.targetType);
 
                 inputStream = reference.createInputStream();
                 lengthToWrite = length;

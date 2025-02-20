@@ -24,7 +24,9 @@ import java.util.Vector;
 import com.morpheusdata.javaisotools.iso9660.ISO9660File;
 import com.morpheusdata.javaisotools.iso9660.ISO9660Directory;
 import com.morpheusdata.javaisotools.iso9660.NamingConventions;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class RockRidgeNamingConventions extends NamingConventions {
 
     public boolean hideMovedDirectoriesStore = true;
@@ -79,7 +81,7 @@ public class RockRidgeNamingConventions extends NamingConventions {
 
     public void endRenaming(ISO9660File file) {
         if (VERBOSE) {
-            System.out.println(" to " + file.getName());
+            log.info(" to {}", file.getName());
         }
     }
 

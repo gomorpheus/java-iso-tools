@@ -25,7 +25,9 @@ import com.morpheusdata.javaisotools.sabre.Element;
 import com.morpheusdata.javaisotools.sabre.Fixup;
 import com.morpheusdata.javaisotools.sabre.HandlerException;
 import com.morpheusdata.javaisotools.sabre.StructureHandler;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DebugStreamHandler extends ChainingStreamHandler {
 
     private long position = 0;
@@ -36,7 +38,7 @@ public class DebugStreamHandler extends ChainingStreamHandler {
 
     public void startDocument() throws HandlerException {
         // Show what is happening
-        System.out.println("document starts");
+        log.debug("document starts");
 
         // Delegate to super class
         super.startDocument();
@@ -44,7 +46,7 @@ public class DebugStreamHandler extends ChainingStreamHandler {
 
     public void startElement(Element element) throws HandlerException {
         // Show what is happening
-        System.out.println("node(" + element + ") @" + position);
+        log.debug("node({}) @{}", element, position);
         this.position += 8;
 
         // Delegate to super class
@@ -56,7 +58,7 @@ public class DebugStreamHandler extends ChainingStreamHandler {
 
         // Show what is happening
         length = reference.getLength();
-        System.out.println("data @" + this.position + " for " + length);
+        log.debug("data @{} for {}", this.position, length);
         this.position += length;
 
         // Delegate to super class
@@ -72,7 +74,7 @@ public class DebugStreamHandler extends ChainingStreamHandler {
         if (length == -1) {
             throw new HandlerException("Cannot fixup unknown length.");
         }
-        System.out.println("fixup @" + this.position + " for " + length);
+        log.debug("fixup @{} for {}", this.position, length);
 
         // Delegate to super class
         fixup = super.fixup(reference);
