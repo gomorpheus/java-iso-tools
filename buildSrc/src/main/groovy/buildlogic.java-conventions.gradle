@@ -16,7 +16,11 @@ repositories {
 
 group = 'com.morpheusdata.java-iso-tools'
 version = '2.1.1-SNAPSHOT'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 dependencies {
 	implementation libs.slf4j.api
